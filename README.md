@@ -14,7 +14,7 @@ A starter template for building multilingual applications with Next.js. This pro
 
    ```bash
    git clone https://github.com/flypsid/multilang.git
-   cd nextjs-multilang-starter
+   cd multilang
    ```
 
 2. **Install dependencies:**
