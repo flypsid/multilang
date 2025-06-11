@@ -5,23 +5,30 @@ import LanguageSwitcher from "./LanguageSwitcher";
 export default function Navbar() {
   const t = useTranslations("HomePage");
   return (
-    <nav
-      style={{
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "space-between",
-        padding: "1em",
-        background: "#f5f5f5",
-        borderBottom: "1px solid #ddd",
-        marginBottom: "2em",
-      }}
-    >
-      <div style={{ display: "flex", alignItems: "center", gap: "1em" }}>
-        <Link href="/">{t("home")}</Link>
-        <Link href="/about">{t("about")}</Link>
-        <Link href="/contact">{t("contact")}</Link>
+    <nav className="w-full bg-background border-b border-muted/60 shadow-sm mb-8">
+      <div className="max-w-4xl mx-auto flex items-center justify-between px-4 py-3">
+        <div className="flex items-center gap-6">
+          <Link
+            href="/"
+            className="text-lg font-semibold text-primary hover:text-primary/80 transition-colors"
+          >
+            {t("home")}
+          </Link>
+          <Link
+            href="/about"
+            className="text-base font-medium text-foreground hover:text-primary transition-colors"
+          >
+            {t("about")}
+          </Link>
+          <Link
+            href="/contact"
+            className="text-base font-medium text-foreground hover:text-primary transition-colors"
+          >
+            {t("contact")}
+          </Link>
+        </div>
+        <LanguageSwitcher />
       </div>
-      <LanguageSwitcher />
     </nav>
   );
 }

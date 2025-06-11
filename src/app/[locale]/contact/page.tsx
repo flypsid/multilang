@@ -46,50 +46,46 @@ const Contact = () => {
   };
 
   return (
-    <div
-      style={{
-        maxWidth: 500,
-        margin: "2em auto",
-        background: "#fff",
-        borderRadius: 12,
-        boxShadow: "0 2px 16px 0 rgba(0,0,0,0.08)",
-        padding: "2em 2em 1.5em 2em",
-      }}
-    >
-      <h1 style={{ fontSize: 32, fontWeight: 700, marginBottom: 8 }}>
+    <div className="max-w-md mx-auto mt-12 bg-background border border-muted rounded-2xl shadow-xl p-8">
+      <h1 className="text-3xl font-bold mb-2 tracking-tight text-foreground">
         {t("title")}
       </h1>
-      <p style={{ color: "#666", marginBottom: 24 }}>{t("description")}</p>
-      <form
-        onSubmit={handleSubmit}
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          gap: "1.5em",
-        }}
-      >
-        <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
-          <Label htmlFor="name" style={{ fontWeight: 500 }}>
+      <p className="text-muted-foreground mb-8 text-base leading-relaxed">
+        {t("description")}
+      </p>
+      <form onSubmit={handleSubmit} className="flex flex-col gap-7">
+        <div className="flex flex-col gap-2">
+          <Label htmlFor="name" className="font-medium text-foreground">
             {t("form.name")}
           </Label>
           <Input
             id="name"
             name="name"
             placeholder={t("form.namePlaceholder")}
-            style={{
-              padding: "0.75em",
-              borderRadius: 8,
-              border: "1px solid #ddd",
-            }}
+            className="h-12 px-4 py-2 rounded-lg border border-input bg-card text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70 focus-visible:ring-offset-2 transition"
+            autoComplete="name"
           />
           {errors.name && (
-            <span style={{ color: "#e11d48", fontSize: 13 }}>
+            <span className="text-destructive text-xs mt-1 flex items-center gap-1 animate-in fade-in duration-200">
+              <svg
+                className="w-4 h-4 text-destructive"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M12 9v2m0 4h.01M21 12A9 9 0 1 1 3 12a9 9 0 0 1 18 0Z"
+                />
+              </svg>
               {errors.name}
             </span>
           )}
         </div>
-        <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
-          <Label htmlFor="email" style={{ fontWeight: 500 }}>
+        <div className="flex flex-col gap-2">
+          <Label htmlFor="email" className="font-medium text-foreground">
             {t("form.email")}
           </Label>
           <Input
@@ -97,52 +93,60 @@ const Contact = () => {
             name="email"
             type="email"
             placeholder={t("form.emailPlaceholder")}
-            style={{
-              padding: "0.75em",
-              borderRadius: 8,
-              border: "1px solid #ddd",
-            }}
+            className="h-12 px-4 py-2 rounded-lg border border-input bg-card text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70 focus-visible:ring-offset-2 transition"
+            autoComplete="email"
           />
           {errors.email && (
-            <span style={{ color: "#e11d48", fontSize: 13 }}>
+            <span className="text-destructive text-xs mt-1 flex items-center gap-1 animate-in fade-in duration-200">
+              <svg
+                className="w-4 h-4 text-destructive"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M12 9v2m0 4h.01M21 12A9 9 0 1 1 3 12a9 9 0 0 1 18 0Z"
+                />
+              </svg>
               {errors.email}
             </span>
           )}
         </div>
-        <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
-          <Label htmlFor="message" style={{ fontWeight: 500 }}>
+        <div className="flex flex-col gap-2">
+          <Label htmlFor="message" className="font-medium text-foreground">
             {t("form.message")}
           </Label>
           <Textarea
             id="message"
             name="message"
             placeholder={t("form.messagePlaceholder")}
-            style={{
-              padding: "0.75em",
-              borderRadius: 8,
-              border: "1px solid #ddd",
-              minHeight: 100,
-            }}
+            className="min-h-[110px] px-4 py-3 rounded-lg border border-input bg-card text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70 focus-visible:ring-offset-2 transition resize-none"
           />
           {errors.message && (
-            <span style={{ color: "#e11d48", fontSize: 13 }}>
+            <span className="text-destructive text-xs mt-1 flex items-center gap-1 animate-in fade-in duration-200">
+              <svg
+                className="w-4 h-4 text-destructive"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M12 9v2m0 4h.01M21 12A9 9 0 1 1 3 12a9 9 0 0 1 18 0Z"
+                />
+              </svg>
               {errors.message}
             </span>
           )}
         </div>
         <Button
           type="submit"
-          style={{
-            background: "#2563eb",
-            color: "#fff",
-            fontWeight: 600,
-            borderRadius: 8,
-            padding: "0.75em 0",
-            fontSize: 18,
-            marginTop: 8,
-            boxShadow: "0 1px 4px 0 rgba(37,99,235,0.08)",
-            transition: "background 0.2s",
-          }}
+          className="h-12 mt-2 bg-primary text-primary-foreground font-semibold rounded-lg text-lg shadow-sm hover:bg-primary/90 transition-colors"
         >
           {t("form.submit")}
         </Button>

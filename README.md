@@ -34,7 +34,7 @@ A starter template for building multilingual applications with Next.js. This pro
 
 ## Usage
 
-- Add new translations in the `/locales` directory.
+- Add new translations in the `/messages` directory.
 - Use Zod for schema validation and get translated error messages automatically.
 - Set up authentication flows using BetterAuth.
 
