@@ -14,12 +14,6 @@ export default createMiddleware({
 
   // Active la détection automatique de la langue (true par défaut)
   localeDetection: true,
-
-  // (Optionnel) Si vous voulez ignorer certains domaines pour la détection
-  // domains: [
-  //   { domain: 'example.com', defaultLocale: 'en' },
-  //   { domain: 'example.fr', defaultLocale: 'fr' }
-  // ]
 });
 
 export const config = {
