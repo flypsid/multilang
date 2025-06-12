@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
 import Navbar from "../../components/Navbar";
 import "./globals.css";
+import { Toaster } from "sonner";
 
 export const metadata = {
   title: "Multilang App",
@@ -35,6 +36,7 @@ export default async function LocaleLayout({
         <NextIntlClientProvider>
           <Navbar />
           {children}
+          <Toaster position="top-center" richColors />
         </NextIntlClientProvider>
       </body>
     </html>

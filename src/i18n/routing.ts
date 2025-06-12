@@ -17,6 +17,22 @@ export const routing = defineRouting({
       en: "/contact",
       fr: "/contact",
     },
+    "/register": {
+      en: "/register",
+      fr: "/inscription",
+    },
+    "/login": {
+      en: "/login",
+      fr: "/connexion",
+    },
+    "/forgot-password": {
+      en: "/forgot-password",
+      fr: "/mot-de-passe-oublie",
+    },
+    "/profile": {
+      en: "/profile",
+      fr: "/profil",
+    },
     "/": {
       en: "/",
       fr: "/",
