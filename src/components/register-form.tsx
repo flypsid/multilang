@@ -7,10 +7,15 @@ import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { signUp } from "@/lib/auth-client";
 import { getRegisterSchema } from "./registerSchema";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
+import { toast } from "sonner";
 
 export const RegisterForm = () => {
   const t = useTranslations("RegisterForm");
+  const router = useRouter();
   const [errors, setErrors] = useState<{ [k: string]: string }>({});
+  const [isPending, setIsPending] = useState(false);
 
   function mapErrorMessage(error: string) {
     if (error === "User already exists") return t("userExists");
@@ -38,12 +43,19 @@ export const RegisterForm = () => {
       return;
     }
     await signUp.email(values, {
-      onRequest: () => {},
-      onResponse: () => {},
+      onRequest: () => {
+        setIsPending(true);
+      },
+      onResponse: () => {
+        setIsPending(false);
+      },
       onError: (ctx) => {
         setErrors({ general: mapErrorMessage(ctx.error.message) });
       },
-      onSuccess: () => {},
+      onSuccess: () => {
+        toast.success(t("registerSuccess"));
+        router.push("/profile");
+      },
     });
   }
 
@@ -103,9 +115,43 @@ export const RegisterForm = () => {
         <Button
           type="submit"
           className="h-12 mt-2 bg-primary text-primary-foreground font-semibold rounded-lg text-lg shadow-sm hover:bg-primary/90 transition-colors"
+          disabled={isPending}
         >
-          {t("submit")}
+          {isPending ? (
+            <span className="flex items-center justify-center gap-2">
+              {t("submit")}
+              <svg
+                className="animate-spin h-5 w-5 text-white"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+              >
+                <circle
+                  className="opacity-25"
+                  cx="12"
+                  cy="12"
+                  r="10"
+                  stroke="currentColor"
+                  strokeWidth="4"
+                ></circle>
+                <path
+                  className="opacity-75"
+                  fill="currentColor"
+                  d="M4 12a8 8 0 018-8v8z"
+                ></path>
+              </svg>
+            </span>
+          ) : (
+            t("submit")
+          )}
         </Button>
+
+        <div className="mb-2 text-center text-sm text-muted-foreground">
+          {t("alreadyAccount")}{" "}
+          <Link href="/login" className="underline hover:text-primary">
+            {t("login")}
+          </Link>
+        </div>
       </form>
     </div>
   );

@@ -5,7 +5,7 @@
     "contact": "Contact",
     "home": "Accueil",
     "heroTitle": "Next.js Multilang Starter",
-    "heroDescription": "Un boilerplate Next.js multilingue moderne avec internationalisation, traduction des erreurs Zod et intégration BetterAuth. Créez facilement des applications sécurisées et prêtes pour la production dans plusieurs langues.",
+    "heroDescription": "Une boilerplate Next.js multilingue moderne avec internationalisation, traduction des erreurs Zod et intégration BetterAuth, Prisma pour gerer les Database, Resend pour les emails. Créez facilement des applications sécurisées et prêtes pour la production dans plusieurs langues.",
     "register": "Commencer",
     "learnMore": "En savoir plus",
     "loginButton": "Se connecter"
@@ -55,7 +55,10 @@
     "passwordRequired": "Le mot de passe est requis.",
     "submit": "S'inscrire",
     "userExists": "Cet email est déjà utilisé.",
-    "passwordTooShort": "Le mot de passe doit contenir au moins 6 caractères."
+    "passwordTooShort": "Le mot de passe doit contenir au moins 6 caractères.",
+    "alreadyAccount": "Vous avez déjà un compte ?",
+    "login": "Se connecter",
+    "registerSuccess": "Inscription terminée !"
   },
   "LoginForm": {
     "title": "Se connecter",
@@ -67,7 +70,11 @@
     "passwordPlaceholder": "Votre mot de passe",
     "passwordRequired": "Le mot de passe est requis.",
     "submit": "Se connecter",
-    "forgotPassword": "Mot de passe oublié ?"
+    "forgotPassword": "Mot de passe oublié ?",
+    "noAccount": "Vous n'avez pas de compte ?",
+    "register": "S'inscrire",
+    "invalidCredentials": "Email ou mot de passe invalide.",
+    "loginSuccess": "Connexion réussie !"
   },
   "ProfilePage": {
     "title": "Profil",
@@ -77,5 +84,8 @@
   "SignOutButton": {
     "signout": "Se déconnecter",
     "loggedOut": "Vous avez été déconnecté. À bientôt !"
+  },
+  "ReturnButton": {
+    "labelhome": "Retour à l'accueil"
   }
 }

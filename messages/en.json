@@ -5,7 +5,7 @@
     "contact": "Contact",
     "home": "Home",
     "heroTitle": "Next.js Multilang Starter",
-    "heroDescription": "A modern multilingual Next.js boilerplate with internationalization, Zod error translation, and BetterAuth integration. Easily build secure, production-ready apps in multiple languages.",
+    "heroDescription": "A modern, multilingual Next.js boilerplate with internationalization, Zod error translation, and BetterAuth integration, Prisma for database management, and Resend for email. Easily build secure, production-ready applications in multiple languages.",
     "register": "Get started",
     "learnMore": "Learn more",
     "loginButton": "Log in"
@@ -55,7 +55,9 @@
     "passwordRequired": "Password is required.",
     "submit": "Register",
     "userExists": "This email is already taken.",
-    "passwordTooShort": "Password must be at least 6 characters long."
+    "passwordTooShort": "Password must be at least 6 characters long.",
+    "alreadyAccount": "Already have an account?",
+    "login": "Login"
   },
   "LoginForm": {
     "title": "Log in",
@@ -67,7 +69,10 @@
     "passwordPlaceholder": "Your password",
     "passwordRequired": "Password is required.",
     "submit": "Log in",
-    "forgotPassword": "Forgot password?"
+    "forgotPassword": "Forgot password?",
+    "noAccount": "Don't have an account?",
+    "register": "Register",
+    "invalidCredentials": "Invalid email or password."
   },
   "ProfilePage": {
     "title": "Profile",
@@ -77,5 +82,10 @@
   "SignOutButton": {
     "signout": "Sign out",
     "loggedOut": "You’ve logged out. See you soon!"
-  }
+  },
+  "ReturnButton": {
+    "labelhome": "Back to Home"
+  },
+  "loginSuccess": "Login successful!",
+  "registerSuccess": "Registration complete!"
 }

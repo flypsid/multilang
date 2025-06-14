@@ -8,9 +8,12 @@ import Link from "next/link";
 import { useTranslations } from "next-intl";
 import { getLoginSchema } from "./loginSchema";
 import { signIn } from "@/lib/auth-client";
+import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 export const LoginForm = () => {
   const t = useTranslations("LoginForm");
+  const router = useRouter();
   const [isPending, setIsPending] = useState(false);
   const [errors, setErrors] = useState<{ [k: string]: string }>({});
 
@@ -38,18 +41,30 @@ export const LoginForm = () => {
     const email = formData.get("email") as string;
     const password = formData.get("password") as string;
 
+    function mapErrorMessage(error: string) {
+      if (error === "Invalid email or password") return t("invalidCredentials");
+      return error;
+    }
+
     await signIn.email(
       {
         email,
         password,
       },
       {
-        onRequest: () => {},
-        onResponse: () => {},
-        onError: (ctx) => {
-          setErrors({ general: ctx.error.message });
+        onRequest: () => {
+          setIsPending(true);
         },
-        onSuccess: () => {},
+        onResponse: () => {
+          setIsPending(false);
+        },
+        onError: (ctx) => {
+          setErrors({ general: mapErrorMessage(ctx.error.message) });
+        },
+        onSuccess: () => {
+          toast.success(t("loginSuccess"));
+          router.push("/profile");
+        },
       }
     );
     setIsPending(false);
@@ -112,8 +127,40 @@ export const LoginForm = () => {
           className="h-12 mt-2 bg-primary text-primary-foreground font-semibold rounded-lg text-lg shadow-sm hover:bg-primary/90 transition-colors"
           disabled={isPending}
         >
-          {t("submit")}
+          {isPending ? (
+            <span className="flex items-center justify-center gap-2">
+              {t("submit")}
+              <svg
+                className="animate-spin h-5 w-5 text-white"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+              >
+                <circle
+                  className="opacity-25"
+                  cx="12"
+                  cy="12"
+                  r="10"
+                  stroke="currentColor"
+                  strokeWidth="4"
+                ></circle>
+                <path
+                  className="opacity-75"
+                  fill="currentColor"
+                  d="M4 12a8 8 0 018-8v8z"
+                ></path>
+              </svg>
+            </span>
+          ) : (
+            t("submit")
+          )}
         </Button>
+        <div className="mb-2 text-center text-sm text-muted-foreground">
+          {t("noAccount")}{" "}
+          <Link href="/register" className="underline hover:text-primary">
+            {t("register")}
+          </Link>
+        </div>
       </form>
     </div>
   );
