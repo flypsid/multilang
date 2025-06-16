@@ -1,22 +1,19 @@
 "use server";
 
 import { auth } from "@/lib/auth";
-import { getRegisterSchema } from "@/components/registerSchema";
+import { getLoginSchema } from "@/components/loginSchema";
+import { headers } from "next/headers";
 
-export async function signUpEmailAction(formData: FormData) {
+export async function signInEmailAction(formData: FormData) {
   // On récupère les valeurs du formulaire
   const values = {
-    name: String(formData.get("name") || ""),
     email: String(formData.get("email") || ""),
     password: String(formData.get("password") || ""),
-    confirmPassword: String(formData.get("confirmPassword") || ""),
   };
 
   // On utilise le même schéma que côté client
-  const schema = getRegisterSchema((k) => {
-    // On peut personnaliser ici ou renvoyer la clé brute
+  const schema = getLoginSchema((k) => {
     const messages: Record<string, string> = {
-      nameRequired: "Please enter your name",
       emailRequired: "Please enter your email",
       passwordRequired: "Please enter your password",
     };
@@ -28,7 +25,8 @@ export async function signUpEmailAction(formData: FormData) {
   }
 
   try {
-    await auth.api.signUpEmail({
+    await auth.api.signInEmail({
+      headers: await headers(),
       body: values,
     });
     return { error: null };

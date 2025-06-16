@@ -53,11 +53,14 @@
     "password": "Password",
     "passwordPlaceholder": "Your password",
     "passwordRequired": "Password is required.",
+    "confirmPassword": "Confirm password",
     "submit": "Register",
-    "userExists": "This email is already taken.",
+    "userExists": "This email is already in use.",
     "passwordTooShort": "Password must be at least 6 characters long.",
     "alreadyAccount": "Already have an account?",
-    "login": "Login"
+    "login": "Login",
+    "registerSuccess": "Registration successful!",
+    "passwordsDontMatch": "Passwords do not match."
   },
   "LoginForm": {
     "title": "Log in",
@@ -72,7 +75,8 @@
     "forgotPassword": "Forgot password?",
     "noAccount": "Don't have an account?",
     "register": "Register",
-    "invalidCredentials": "Invalid email or password."
+    "invalidCredentials": "Invalid email or password.",
+    "loginSuccess": "Connection successful!"
   },
   "ProfilePage": {
     "title": "Profile",

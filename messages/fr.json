@@ -53,12 +53,14 @@
     "password": "Mot de passe",
     "passwordPlaceholder": "Votre mot de passe",
     "passwordRequired": "Le mot de passe est requis.",
+    "confirmPassword": "Confirmez le mot de passe",
     "submit": "S'inscrire",
     "userExists": "Cet email est déjà utilisé.",
     "passwordTooShort": "Le mot de passe doit contenir au moins 6 caractères.",
     "alreadyAccount": "Vous avez déjà un compte ?",
     "login": "Se connecter",
-    "registerSuccess": "Inscription terminée !"
+    "registerSuccess": "Inscription terminée !",
+    "passwordsDontMatch": "Les mots de passe ne correspondent pas."
   },
   "LoginForm": {
     "title": "Se connecter",

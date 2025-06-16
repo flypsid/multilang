@@ -1,21 +1,22 @@
 "use client";
 
+// import { signUp } from "@/lib/auth-client";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { useTranslations } from "next-intl";
-import { useState } from "react";
-import { signUp } from "@/lib/auth-client";
-import { getRegisterSchema } from "./registerSchema";
-import { useRouter } from "next/navigation";
-import Link from "next/link";
 import { toast } from "sonner";
+import { getRegisterSchema } from "./registerSchema";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { signUpEmailAction } from "@/actions/sign-up-email.action";
+import { useTranslations } from "next-intl";
+import Link from "next/link";
 
 export const RegisterForm = () => {
-  const t = useTranslations("RegisterForm");
-  const router = useRouter();
-  const [errors, setErrors] = useState<{ [k: string]: string }>({});
   const [isPending, setIsPending] = useState(false);
+  const [formErrors, setFormErrors] = useState<{ [k: string]: string }>({});
+  const router = useRouter();
+  const t = useTranslations("RegisterForm");
 
   function mapErrorMessage(error: string) {
     if (error === "User already exists") return t("userExists");
@@ -25,38 +26,38 @@ export const RegisterForm = () => {
 
   async function handleSubmit(evt: React.FormEvent<HTMLFormElement>) {
     evt.preventDefault();
-    setErrors({});
-    const formData = new FormData(evt.target as HTMLFormElement);
+    setIsPending(true);
+
+    const formData = new FormData(evt.currentTarget);
     const values = {
-      name: formData.get("name") as string,
-      email: formData.get("email") as string,
-      password: formData.get("password") as string,
+      name: String(formData.get("name") || ""),
+      email: String(formData.get("email") || ""),
+      password: String(formData.get("password") || ""),
+      confirmPassword: String(formData.get("confirmPassword") || ""),
     };
+
     const schema = getRegisterSchema(t);
     const result = schema.safeParse(values);
     if (!result.success) {
-      const fieldErrors: { [k: string]: string } = {};
-      for (const err of result.error.errors) {
-        if (err.path[0]) fieldErrors[err.path[0]] = err.message;
-      }
-      setErrors(fieldErrors);
+      const errors: { [k: string]: string } = {};
+      result.error.errors.forEach((err) => {
+        if (err.path[0]) errors[err.path[0]] = err.message;
+      });
+      setFormErrors(errors);
+      setIsPending(false);
       return;
     }
-    await signUp.email(values, {
-      onRequest: () => {
-        setIsPending(true);
-      },
-      onResponse: () => {
-        setIsPending(false);
-      },
-      onError: (ctx) => {
-        setErrors({ general: mapErrorMessage(ctx.error.message) });
-      },
-      onSuccess: () => {
-        toast.success(t("registerSuccess"));
-        router.push("/profile");
-      },
-    });
+    setFormErrors({});
+
+    const { error } = await signUpEmailAction(formData);
+
+    if (error) {
+      toast.error(mapErrorMessage(error));
+      setIsPending(false);
+    } else {
+      toast.success(t("registerSuccess"));
+      router.push("/login");
+    }
   }
 
   return (
@@ -67,54 +68,57 @@ export const RegisterForm = () => {
       <p className="text-muted-foreground mb-8 text-base leading-relaxed">
         {t("description")}
       </p>
-      <form onSubmit={handleSubmit} className="flex flex-col gap-7">
-        <div className="flex flex-col gap-2">
-          <Label htmlFor="name" className="font-medium text-foreground">
-            {t("name")}
-          </Label>
+      <form onSubmit={handleSubmit} className="max-w-sm w-full space-y-4">
+        <div className="space-y-2">
+          <Label htmlFor="name">{t("name")}</Label>
           <Input id="name" name="name" placeholder={t("namePlaceholder")} />
-          {errors.name && (
-            <span className="text-red-500 text-sm">{errors.name}</span>
+          {formErrors.name && (
+            <p className="text-red-500 text-sm">{formErrors.name}</p>
           )}
         </div>
 
-        <div className="flex flex-col gap-2">
-          <Label htmlFor="email" className="font-medium text-foreground">
-            {t("email")}
-          </Label>
+        <div className="space-y-2">
+          <Label htmlFor="email">{t("email")}</Label>
           <Input
             type="email"
             id="email"
             name="email"
             placeholder={t("emailPlaceholder")}
           />
-          {errors.email && (
-            <span className="text-red-500 text-sm">{errors.email}</span>
+          {formErrors.email && (
+            <p className="text-red-500 text-sm">{formErrors.email}</p>
           )}
         </div>
 
-        <div className="flex flex-col gap-2">
-          <Label htmlFor="password" className="font-medium text-foreground">
-            {t("password")}
-          </Label>
+        <div className="space-y-2">
+          <Label htmlFor="password">{t("password")}</Label>
           <Input
             type="password"
             id="password"
             name="password"
             placeholder={t("passwordPlaceholder")}
           />
-          {errors.password && (
-            <span className="text-red-500 text-sm">{errors.password}</span>
+          {formErrors.password && (
+            <p className="text-red-500 text-sm">{formErrors.password}</p>
           )}
         </div>
 
-        {errors.general && (
-          <span className="text-red-500 text-sm">{errors.general}</span>
-        )}
+        <div className="space-y-2">
+          <Label htmlFor="confirmPassword">{t("confirmPassword")}</Label>
+          <Input
+            type="password"
+            id="confirmPassword"
+            name="confirmPassword"
+            placeholder={t("passwordPlaceholder")}
+          />
+          {formErrors.confirmPassword && (
+            <p className="text-red-500 text-sm">{formErrors.confirmPassword}</p>
+          )}
+        </div>
 
         <Button
           type="submit"
-          className="h-12 mt-2 bg-primary text-primary-foreground font-semibold rounded-lg text-lg shadow-sm hover:bg-primary/90 transition-colors"
+          className="h-12 mt-2 w-full bg-primary text-primary-foreground font-semibold rounded-lg text-lg shadow-sm hover:bg-primary/90 transition-colors"
           disabled={isPending}
         >
           {isPending ? (
@@ -145,10 +149,9 @@ export const RegisterForm = () => {
             t("submit")
           )}
         </Button>
-
-        <div className="mb-2 text-center text-sm text-muted-foreground">
+        <div className="text-center text-sm mt-2">
           {t("alreadyAccount")}{" "}
-          <Link href="/login" className="underline hover:text-primary">
+          <Link href="/auth/login" className="underline">
             {t("login")}
           </Link>
         </div>

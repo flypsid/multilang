@@ -3,23 +3,27 @@
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { useState } from "react";
-import Link from "next/link";
 import { useTranslations } from "next-intl";
+import { useState } from "react";
 import { getLoginSchema } from "./loginSchema";
-import { signIn } from "@/lib/auth-client";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 import { toast } from "sonner";
+import { signInEmailAction } from "@/actions/sign-in-email.action";
 
 export const LoginForm = () => {
   const t = useTranslations("LoginForm");
   const router = useRouter();
-  const [isPending, setIsPending] = useState(false);
   const [errors, setErrors] = useState<{ [k: string]: string }>({});
+  const [isPending, setIsPending] = useState(false);
+
+  function mapErrorMessage(error: string) {
+    if (error === "Invalid credentials") return t("invalidCredentials");
+    return error;
+  }
 
   async function handleSubmit(evt: React.FormEvent<HTMLFormElement>) {
     evt.preventDefault();
-    setIsPending(true);
     setErrors({});
     const formData = new FormData(evt.target as HTMLFormElement);
     const values = {
@@ -34,40 +38,17 @@ export const LoginForm = () => {
         if (err.path[0]) fieldErrors[err.path[0]] = err.message;
       }
       setErrors(fieldErrors);
-      setIsPending(false);
       return;
     }
-
-    const email = formData.get("email") as string;
-    const password = formData.get("password") as string;
-
-    function mapErrorMessage(error: string) {
-      if (error === "Invalid email or password") return t("invalidCredentials");
-      return error;
-    }
-
-    await signIn.email(
-      {
-        email,
-        password,
-      },
-      {
-        onRequest: () => {
-          setIsPending(true);
-        },
-        onResponse: () => {
-          setIsPending(false);
-        },
-        onError: (ctx) => {
-          setErrors({ general: mapErrorMessage(ctx.error.message) });
-        },
-        onSuccess: () => {
-          toast.success(t("loginSuccess"));
-          router.push("/profile");
-        },
-      }
-    );
+    setIsPending(true);
+    const { error } = await signInEmailAction(formData);
     setIsPending(false);
+    if (error) {
+      setErrors({ general: mapErrorMessage(error) });
+    } else {
+      toast.success(t("loginSuccess"));
+      router.push("/profile");
+    }
   }
 
   return (
@@ -95,18 +76,9 @@ export const LoginForm = () => {
         </div>
 
         <div className="flex flex-col gap-2">
-          <div className="flex justify-between items-center gap-2">
-            <Label htmlFor="password" className="font-medium text-foreground">
-              {t("password")}
-            </Label>
-            <Link
-              tabIndex={-1}
-              href="/forgot-password"
-              className="text-sm italic text-muted-foreground hover:text-foreground"
-            >
-              {t("forgotPassword")}
-            </Link>
-          </div>
+          <Label htmlFor="password" className="font-medium text-foreground">
+            {t("password")}
+          </Label>
           <Input
             type="password"
             id="password"
@@ -155,9 +127,10 @@ export const LoginForm = () => {
             t("submit")
           )}
         </Button>
+
         <div className="mb-2 text-center text-sm text-muted-foreground">
           {t("noAccount")}{" "}
-          <Link href="/register" className="underline hover:text-primary">
+          <Link href="/auth/register" className="underline hover:text-primary">
             {t("register")}
           </Link>
         </div>
