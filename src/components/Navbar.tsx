@@ -30,7 +30,7 @@ export default function Navbar() {
         <div className="flex items-center gap-4">
           <LanguageSwitcher />
           <Link
-            href="/login"
+            href="/auth/login"
             className="text-base font-medium text-foreground hover:text-primary transition-colors px-4 py-2 border border-primary rounded-lg bg-primary/10 hover:bg-primary/20"
           >
             {t("loginButton")}

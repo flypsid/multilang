@@ -26,7 +26,7 @@ export const SignOutButton = () => {
         },
         onSuccess: () => {
           toast.success(t("loggedOut"));
-          router.push("/login");
+          router.push("/auth/login");
         },
       },
     });

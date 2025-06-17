@@ -13,7 +13,7 @@ export default function HomePage() {
           {t("heroDescription")}
         </p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center mt-6">
-          <Link href="/register">
+          <Link href="/auth/register">
             <button className="px-8 py-3 bg-primary text-white rounded-lg font-semibold shadow hover:bg-primary/80 transition text-lg">
               {t("register")}
             </button>

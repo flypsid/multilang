@@ -11,17 +11,8 @@ export async function signUpEmailAction(formData: FormData) {
     password: String(formData.get("password") || ""),
     confirmPassword: String(formData.get("confirmPassword") || ""),
   };
-
   // On utilise le même schéma que côté client
-  const schema = getRegisterSchema((k) => {
-    // On peut personnaliser ici ou renvoyer la clé brute
-    const messages: Record<string, string> = {
-      nameRequired: "Please enter your name",
-      emailRequired: "Please enter your email",
-      passwordRequired: "Please enter your password",
-    };
-    return messages[k] || k;
-  });
+  const schema = getRegisterSchema((k) => k);
   const result = schema.safeParse(values);
   if (!result.success) {
     return { error: result.error.errors[0].message };

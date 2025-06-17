@@ -56,7 +56,7 @@ export const RegisterForm = () => {
       setIsPending(false);
     } else {
       toast.success(t("registerSuccess"));
-      router.push("/login");
+      router.push("auth/login");
     }
   }
 

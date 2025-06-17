@@ -18,7 +18,7 @@ export const LoginForm = () => {
   const [isPending, setIsPending] = useState(false);
 
   function mapErrorMessage(error: string) {
-    if (error === "Invalid credentials") return t("invalidCredentials");
+    if (error === "Invalid email or password") return t("invalidCredentials");
     return error;
   }
 

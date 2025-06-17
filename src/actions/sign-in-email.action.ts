@@ -10,15 +10,8 @@ export async function signInEmailAction(formData: FormData) {
     email: String(formData.get("email") || ""),
     password: String(formData.get("password") || ""),
   };
-
   // On utilise le même schéma que côté client
-  const schema = getLoginSchema((k) => {
-    const messages: Record<string, string> = {
-      emailRequired: "Please enter your email",
-      passwordRequired: "Please enter your password",
-    };
-    return messages[k] || k;
-  });
+  const schema = getLoginSchema((k) => k);
   const result = schema.safeParse(values);
   if (!result.success) {
     return { error: result.error.errors[0].message };
