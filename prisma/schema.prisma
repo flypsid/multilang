@@ -9,6 +9,11 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum UserRole {
+  USER
+  ADMIN
+}
+
 model Post {
   id        String   @id @default(uuid())
   createdAt DateTime @default(now())
@@ -24,7 +29,7 @@ model Post {
 }
 
 model User {
-  id            String    @id
+  id            String    @id @default(uuid())
   createdAt     DateTime
   updatedAt     DateTime
 
@@ -32,6 +37,10 @@ model User {
   email         String @unique
   emailVerified Boolean
   image         String?
+  role          UserRole  @default(USER)
+  banned        Boolean?
+  banReason     String?
+  banExpires    DateTime?
  
   sessions      Session[]
   accounts      Account[]
@@ -41,7 +50,7 @@ model User {
 }
 
 model Session {
-  id        String   @id
+  id        String   @id @default(uuid())
   createdAt DateTime
   updatedAt DateTime
 
@@ -57,7 +66,7 @@ model Session {
 }
 
 model Account {
-  id                    String    @id
+  id                    String    @id @default(uuid())
   createdAt             DateTime
   updatedAt             DateTime
 
@@ -79,7 +88,7 @@ model Account {
 }
 
 model Verification {
-  id         String    @id
+  id         String    @id @default(uuid())
   createdAt  DateTime?
   updatedAt  DateTime?
 

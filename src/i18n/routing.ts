@@ -33,6 +33,10 @@ export const routing = defineRouting({
       en: "/profile",
       fr: "/profil",
     },
+    "/admin/dashboard": {
+      en: "/admin/dashboard",
+      fr: "/admin/tableau-de-bord",
+    },
     "/": {
       en: "/",
       fr: "/",

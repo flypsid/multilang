@@ -5,7 +5,7 @@ import { routing } from "./i18n/routing";
 import { getSessionCookie } from "better-auth/cookies";
 
 // Définir les routes protégées sans le slash initial
-const protectedRoutes = ["profile"];
+const protectedRoutes = ["profile", "admin/dashboard"];
 
 // Create the internationalization middleware
 const intlMiddleware = createIntlMiddleware({

@@ -80,8 +80,7 @@
   },
   "ProfilePage": {
     "title": "Profil",
-    "description": "Ceci est la page de profil. Vous pouvez voir et modifier vos informations de profil ici.",
-    "unauth": "Vous devez être connecté pour voir cette page."
+    "description": "Ceci est la page de profil. Vous pouvez voir et modifier vos informations de profil ici."
   },
   "SignOutButton": {
     "signout": "Se déconnecter",

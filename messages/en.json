@@ -8,7 +8,7 @@
     "heroDescription": "A modern, multilingual Next.js boilerplate with internationalization, Zod error translation, and BetterAuth integration, Prisma for database management, and Resend for email. Easily build secure, production-ready applications in multiple languages.",
     "register": "Get started",
     "learnMore": "Learn more",
-    "loginButton": "Log in"
+    "loginButton": "Sign in"
   },
   "AboutPage": {
     "title": "About us",
@@ -80,8 +80,7 @@
   },
   "ProfilePage": {
     "title": "Profile",
-    "description": "This is the profile page. You can view and edit your profile information here.",
-    "unauth": "You must be logged in to view this page."
+    "description": "This is the profile page. You can view and edit your profile information here."
   },
   "SignOutButton": {
     "signout": "Sign out",
